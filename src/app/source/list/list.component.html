@@ -1,3 +1,17 @@
-<p>
-  list works!
-</p>
+<p>Page - source list</p>
+
+<div class='table-responsive'>
+  <table class='table' *ngIf='sources && sources.length'>
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor='let source of sources'>
+        <td>{{ source }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

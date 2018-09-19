@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
+  // To-do: Replace data-type with class name later
+  // To-do: fetch data from the db
+  sources: string[] = [ "bbc", "nytimes", "google news" ];
+
   constructor() { }
 
   ngOnInit() {
