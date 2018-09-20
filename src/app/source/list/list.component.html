@@ -13,10 +13,8 @@
   </div>
 </div>
 
-<h4>Filter by: {{listFilter}}</h4>
-
 <div class='table-responsive'>
-  <table class='table' *ngIf='sources && sources.length'>
+  <table class='table' *ngIf='filteredSources && filteredSources.length'>
     <thead>
       <tr>
         <th>Image</th>
@@ -27,7 +25,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor='let source of sources'>
+      <tr *ngFor='let source of filteredSources'>
         <td>
           <img *ngIf='showImgs'
               [src]='source.imgUrl'

@@ -14,8 +14,17 @@ export class ListComponent implements OnInit {
   imgWidth: number = 50;
   imgHeight: number = 50;
   showImgs: boolean = true;
-  listFilter: string = '';
+  
+  _listFilter: string;
+  get listFilter(): string {
+    return this._listFilter;
+  }
+  set listFilter(value: string) {
+    this._listFilter = value;
+    this.filteredSources = this.listFilter ? this.filter(this.listFilter) : this.sources;
+  }
 
+  filteredSources: ISource[];
   sources: ISource[] = [
     {
       name: "bbc",
@@ -31,13 +40,23 @@ export class ListComponent implements OnInit {
     },
   ];
   
-  constructor() { }
+  constructor() { 
+    this.filteredSources = this.sources;
+    this.listFilter = '';
+  }
 
   ngOnInit() {
   }
 
   toggleVisibilityOfImgs(): void {
     this.showImgs = !this.showImgs;
+  }
+
+  filter(filterText: string) : ISource[] {
+    filterText = filterText.toLocaleLowerCase();
+    return this.sources.filter((src: ISource) =>
+      src.name.toLocaleLowerCase().indexOf(filterText) !== -1
+    );
   }
 
 }
