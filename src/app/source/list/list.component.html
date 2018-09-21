@@ -17,7 +17,7 @@
   <table class='table' *ngIf='filteredSources && filteredSources.length'>
     <thead>
       <tr>
-        <th>Image</th>
+        <th *ngIf='showImgs'>Image</th>
         <th>Name</th>
         <th>Url</th>
         <th>Price</th>
@@ -26,9 +26,8 @@
 
     <tbody>
       <tr *ngFor='let source of filteredSources'>
-        <td>
-          <img *ngIf='showImgs'
-              [src]='source.imgUrl'
+        <td *ngIf='showImgs'>
+          <img [src]='source.imgUrl'
               [style.width.px]='imgWidth'
               [style.height.px]='imgHeight' >
         </td>
