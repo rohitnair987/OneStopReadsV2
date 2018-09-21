@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ISource } from '../../../models/source';
+import { SourceService } from '../source.service';
 
 @Component({
   selector: 'source-list',
@@ -25,27 +26,14 @@ export class ListComponent implements OnInit {
   }
 
   filteredSources: ISource[];
-  sources: ISource[] = [
-    {
-      name: "bbc",
-      url: "bbc.com",
-      price: 32,
-      imgUrl: "https://pbs.twimg.com/profile_images/991395737329176576/9q7_JzFa_400x400.jpg"
-    },
-    {
-      name: "nyt",
-      url: "nytimes.com",
-      price: 3.4,
-      imgUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Bulma_Lithograph.PNG/250px-Bulma_Lithograph.PNG"
-    },
-  ];
+  sources: ISource[];
   
-  constructor() { 
-    this.filteredSources = this.sources;
-    this.listFilter = '';
+  constructor(private sourceService: SourceService) { 
   }
 
   ngOnInit() {
+    this.sources = this.sourceService.getSources();
+    this.filteredSources = this.sources;
   }
 
   toggleVisibilityOfImgs(): void {
