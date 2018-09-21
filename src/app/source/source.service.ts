@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
 import { ISource } from 'src/models/source';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SourceService {
 
-  constructor() { }
+  private sourceUrl = 'api/source/sampleSources.json';
 
-  getSources(): ISource[] {
-    return [
-      {
-        name: "bbc",
-        url: "bbc.com",
-        price: 32,
-        imgUrl: "https://pbs.twimg.com/profile_images/991395737329176576/9q7_JzFa_400x400.jpg"
-      },
-      {
-        name: "nyt",
-        url: "nytimes.com",
-        price: 3.4,
-        imgUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Bulma_Lithograph.PNG/250px-Bulma_Lithograph.PNG"
-      },
-    ];
+  constructor(private http: HttpClient) { }
+
+  getSources(): Observable<ISource[]> {
+    return this.http
+      .get<ISource[]>(this.sourceUrl)
+      .pipe(
+        // use tap while debugging
+        // tap(rawData => console.log("Full data: " + JSON.stringify(rawData))),
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    var errorMsg = `An error occured. ${err.error.message}`
+    console.log(errorMsg);
+    return throwError(errorMsg);
   }
 
 }

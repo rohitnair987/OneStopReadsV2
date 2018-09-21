@@ -9,9 +9,6 @@ import { SourceService } from '../source.service';
 })
 export class ListComponent implements OnInit {
 
-  // To-do: Replace data-type with class name later
-  // To-do: fetch data from the db
-
   imgWidth: number = 50;
   imgHeight: number = 50;
   showImgs: boolean = true;
@@ -27,13 +24,21 @@ export class ListComponent implements OnInit {
 
   filteredSources: ISource[];
   sources: ISource[];
+  errorMsg: string;
   
   constructor(private sourceService: SourceService) { 
   }
 
   ngOnInit() {
-    this.sources = this.sourceService.getSources();
-    this.filteredSources = this.sources;
+    this.sourceService.getSources()
+      .subscribe(
+        sources => { // <-- success
+          this.sources = sources;
+          this.filteredSources = this.sources;
+        },
+        error => this.errorMsg = <any>error // <-- failure
+      );
+    
   }
 
   toggleVisibilityOfImgs(): void {
