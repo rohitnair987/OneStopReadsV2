@@ -3,10 +3,10 @@ import { ISource } from '../../../models/source';
 import { SourceService } from '../source.service';
 
 @Component({
-  selector: 'source-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
+
 export class ListComponent implements OnInit {
 
   imgWidth: number = 50;
@@ -38,7 +38,6 @@ export class ListComponent implements OnInit {
         },
         error => this.errorMsg = <any>error // <-- failure
       );
-    
   }
 
   toggleVisibilityOfImgs(): void {
