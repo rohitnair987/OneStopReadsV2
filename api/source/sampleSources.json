@@ -1,0 +1,14 @@
+[
+    {
+        "name": "bbc",
+        "url": "bbc.com",
+        "price": 32,
+        "imgUrl": "https://i0.wp.com/dbfgame.net/wp-content/uploads/2017/12/vegeta-black.jpg?resize=1000%2C620"
+    },
+    {
+        "name": "nyt",
+        "url": "nytimes.com",
+        "price": 3.4,
+        "imgUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/7/71/Bulma_Lithograph.PNG/250px-Bulma_Lithograph.PNG"
+    }
+]
