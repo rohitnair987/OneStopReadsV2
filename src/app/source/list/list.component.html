@@ -29,7 +29,11 @@
               [style.width.px]='imgWidth'
               [style.height.px]='imgHeight' >
         </td>
-        <td>{{ source.name }}</td>
+        <td>
+          <a [routerLink]="['/sources', source.name]">
+            {{ source.name }}
+          </a>
+        </td>
         <td>{{ source.url }}</td>
         <td>{{ source.price | currency }}</td>
       </tr>
