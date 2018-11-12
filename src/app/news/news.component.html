@@ -1,0 +1,25 @@
+<H3>The One stop for all your reading needs.</H3>
+
+<div *ngIf='sources && sources.length'>
+  <div *ngFor='let source of sources'>
+    <div *ngIf='source.news && source.news.length' class='table-responsive'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>
+                <img [src]='source.imgUrl' [style.width.px]='imgWidth' [style.height.px]='imgHeight'>
+              </th>
+              <th>{{ source.name }}</th>
+            </tr>
+          </thead>
+      
+          <tbody>
+            <tr *ngFor='let newsRow of source.news; let i = index'>
+              <td>{{ i + 1 }}</td>
+              <td>{{ newsRow }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
