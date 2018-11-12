@@ -1,7 +1,7 @@
 [
     {
         "name": "bbc",
-        "url": "bbc.com",
+        "url": "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=2dc9da7dc4ab4918819cbe0de243c584",
         "price": 32,
         "imgUrl": "https://i0.wp.com/dbfgame.net/wp-content/uploads/2017/12/vegeta-black.jpg?resize=1000%2C620"
     },
