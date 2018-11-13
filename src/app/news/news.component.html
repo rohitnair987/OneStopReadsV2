@@ -1,7 +1,10 @@
 <H3>The One stop for all your reading needs.</H3>
+<a (click)='reset()' class='floatRight'>Reset sources</a>
+<br />
+<br />
 
-<div *ngIf='sources && sources.length'>
-  <div *ngFor='let source of sources'>
+<div *ngIf='displayedSources && displayedSources.length'>
+  <div *ngFor='let source of displayedSources'>
     <div *ngIf='source.news && source.news.length' class='table-responsive'>
         <table class='table'>
           <thead>
@@ -9,7 +12,11 @@
               <th>
                 <img [src]='source.imgUrl' [style.width.px]='imgWidth' [style.height.px]='imgHeight'>
               </th>
-              <th>{{ source.name }}</th>
+              <th>
+                {{ source.name }} 
+                <a (click)='unsubscribe(source.name)'>Unsubscribe</a>
+                
+              </th>
             </tr>
           </thead>
       
