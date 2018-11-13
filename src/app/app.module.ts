@@ -10,8 +10,6 @@ import { DetailsComponent } from './source/details/details.component';
 import { DetailsGuard } from './source/details/details.guard';
 import { NewsComponent } from './news/news.component';
 
-// To-do: Once the news page is ready, 
-// that should be the default route.
 var routes = [
   { path: 'news', component: NewsComponent },
   { path: 'sources', component: ListComponent },
