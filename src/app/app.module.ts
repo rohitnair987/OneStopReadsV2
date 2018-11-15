@@ -10,21 +10,22 @@ import { SourceModule } from './source/source.module';
 import { ListComponent } from './source/list/list.component';
 import { DetailsComponent } from './source/details/details.component';
 import { DetailsGuard } from './source/details/details.guard';
+import { NewsComponent } from './news/news.component';
 
-// To-do: Once the news page is ready, 
-// that should be the default route.
 var routes = [
+  { path: 'news', component: NewsComponent },
   { path: 'sources', component: ListComponent },
   { path: 'sources/:id',
-    canActivate: [ DetailsGuard],
+    canActivate: [DetailsGuard],
     component: DetailsComponent },
-  { path: '', redirectTo: 'sources', pathMatch: 'full' },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '', redirectTo: 'news', pathMatch: 'full' },
+  { path: '**', redirectTo: 'news', pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

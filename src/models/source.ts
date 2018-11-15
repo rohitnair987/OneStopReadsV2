@@ -9,4 +9,6 @@ export interface ISource {
     // testing
     price: number,
     imgUrl: string
+
+    news: [string]
 }
