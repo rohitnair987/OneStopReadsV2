@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { LoginModule } from './login/login.module';
+import { LoginAndRegisterModule } from './login-and-register/login-and-register.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -27,6 +29,8 @@ var routes = [
   imports: [
     BrowserModule,
     SourceModule,
+    LoginModule,
+    LoginAndRegisterModule
     HttpClientModule,
     RouterModule.forRoot(
       routes,
