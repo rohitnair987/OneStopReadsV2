@@ -8,8 +8,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'One Stop Reads';
   isLoggedIn = this.checkIfLoggedIn();
-
+  isAdmin = this.checkIfLoggedIn();
+  
   checkIfLoggedIn() {
     return false;
+  }
+
+  checkIfAdmin() {
+    return true;
   }
 }

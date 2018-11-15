@@ -13,6 +13,7 @@ import { DetailsGuard } from './source/details/details.guard';
 import { NewsComponent } from './news/news.component';
 import { RegisterComponent } from "src/app/login-and-register/register/register.component";
 import { LoginComponent } from "src/app/login-and-register/login/login.component";
+import { SourceAddComponent } from "src/app/source/source-add/source-add.component";
 
 var routes = [
   { path: 'news', component: NewsComponent },
@@ -20,6 +21,8 @@ var routes = [
   { path: 'login', component: LoginComponent },
   //{ path: 'logout', component: LogoutComponent },
   { path: 'sources', component: ListComponent },
+  { path: 'sources/add', component: SourceAddComponent },
+  { path: 'sources/edit/:id', component: ListComponent },
   { path: 'sources/:id',
     canActivate: [DetailsGuard],
     component: DetailsComponent },

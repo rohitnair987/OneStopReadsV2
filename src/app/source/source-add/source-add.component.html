@@ -1,0 +1,97 @@
+<div class='card'>
+    <div class='card-header'>
+      <span>{{ pageTitle }} </span>
+    </div>
+  </div>
+  
+  <br />
+
+  <div class="container">
+    <div [hidden]="mongoRecordId">
+      <form (ngSubmit)="onSubmit()" #sourceForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                  required
+                  [(ngModel)]="source.name" name="name"
+                  #name="ngModel">
+          <div [hidden]="name.valid || name.pristine"
+                class="alert alert-danger">
+              Name is required
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description"
+                  [(ngModel)]="source.description" name="description">
+        </div>
+    
+        <div class="form-group">
+          <label for="url">Url</label>
+          <input type="text" class="form-control" id="url"
+                  required
+                  [(ngModel)]="source.url" name="url"
+                  #url="ngModel">
+          <div [hidden]="url.valid || url.pristine"
+                class="alert alert-danger">
+              Url is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags">Tags (space separated)</label>
+          <input type="text" class="form-control" id="tags"
+                  [(ngModel)]="source.tags" name="tags">
+        </div>
+
+        <div class="form-group">
+          <label for="imgUrl">Image Url</label>
+          <input type="text" class="form-control" id="imgUrl"
+                  [(ngModel)]="source.imgUrl" name="imgUrl">
+        </div>
+  
+        <button type="submit" class="btn btn-success" [disabled]="!sourceForm.form.valid">Submit</button>
+      </form>
+      <br />
+      <button class='btn btn-primary' [routerLink]="['/sources']">
+        <i class='fa fa-chevron-left'></i> Back
+      </button>
+    </div>
+  
+    <div [hidden]="!mongoRecordId">
+      <h2>You submitted the following:</h2>
+      <div class="row">
+        <div class="col-xs-3">Name</div>
+        <div class="col-xs-9">{{ source.name }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Description</div>
+        <div class="col-xs-9">{{ source.description }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Url</div>
+        <div class="col-xs-9">{{ source.url }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Tags</div>
+        <div class="col-xs-9">{{ source.tags }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Image</div>
+        <div class="col-xs-9"><img src='{{ source.imgUrl }}'></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Last Modified</div>
+        <div class="col-xs-9">{{ source.dateLastModified }}</div>
+      </div>
+      <br>
+      <button class="btn btn-primary" [routerLink]="['/sources/edit', mongoRecordId]">Edit</button>
+      <button class='btn btn-primary' (click)='mongoRecordId=""'>
+        <i class='fa fa-chevron-left'></i> Back
+      </button>
+    </div>
+  </div>
+
+  <br />
+  <span *ngIf='showErrorMsg'>Something went wrong.</span>
