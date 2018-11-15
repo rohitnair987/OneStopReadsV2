@@ -1,16 +1,41 @@
-<p>Page - source list</p>
+<div class='row'>
+  <div class='col-md-4'>
+      <button class='btn btn-primary'
+        (click)='toggleVisibilityOfImgs()'>
+        {{showImgs ? 'Hide' : 'Show' }} Images
+      </button>
+  </div>
+  <div class='col-md-4'>
+    <input type='text'
+      [(ngModel)]='listFilter' />
+  </div>
+</div>
 
 <div class='table-responsive'>
-  <table class='table' *ngIf='sources && sources.length'>
+  <table class='table' *ngIf='filteredSources && filteredSources.length'>
     <thead>
       <tr>
+        <th *ngIf='showImgs'>Image</th>
         <th>Name</th>
+        <th>Url</th>
+        <th>Price</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor='let source of sources'>
-        <td>{{ source }}</td>
+      <tr *ngFor='let source of filteredSources'>
+        <td *ngIf='showImgs'>
+          <img [src]='source.imgUrl'
+              [style.width.px]='imgWidth'
+              [style.height.px]='imgHeight' >
+        </td>
+        <td>
+          <a [routerLink]="['/sources', source.name]">
+            {{ source.name }}
+          </a>
+        </td>
+        <td>{{ source.url }}</td>
+        <td>{{ source.price | currency }}</td>
       </tr>
     </tbody>
   </table>
