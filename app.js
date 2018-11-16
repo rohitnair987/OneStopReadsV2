@@ -54,11 +54,8 @@ app.post("/api/register", function(req, res) {
 });
 
 app.post("/api/source-add", function(req, res) {
-  console.log('/api/source-add');
-  console.log(req.body);
   var source = req.body;
   source.dateLastModified = new Date();
-  console.log(source);
 
   if (!req.body) {
     handleError(res, "Invalid user input", "Must provide a name and a url.", 400);
@@ -72,6 +69,19 @@ app.post("/api/source-add", function(req, res) {
       }
     });
   }
+});
+
+app.get("/api/sources-get", function(req, res) {
+  console.log("/api/sources-get");
+
+  db.collection(SOURCE_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      console.log("Failed to get sources.");
+      handleError(res, err.message, "Failed to get sources.");
+    } else {
+      res.status(201).json(docs);
+    }
+  });
 });
 
 app.listen(3000);

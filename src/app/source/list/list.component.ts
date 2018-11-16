@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ISource } from '../../../models/source';
 import { SourceService } from '../source.service';
+import { Source } from "src/models/source";
 
 @Component({
   templateUrl: './list.component.html',
@@ -22,8 +22,8 @@ export class ListComponent implements OnInit {
     this.filteredSources = this.listFilter ? this.filter(this.listFilter) : this.sources;
   }
 
-  filteredSources: ISource[];
-  sources: ISource[];
+  filteredSources: Source[];
+  sources: Source[];
   errorMsg: string;
   
   constructor(private sourceService: SourceService) { 
@@ -44,9 +44,10 @@ export class ListComponent implements OnInit {
     this.showImgs = !this.showImgs;
   }
 
-  filter(filterText: string) : ISource[] {
+  filter(filterText: string) : Source[] {
     filterText = filterText.toLocaleLowerCase();
-    return this.sources.filter((src: ISource) =>
+
+    return this.sources.filter((src: Source) =>
       src.name.toLocaleLowerCase().indexOf(filterText) !== -1
     );
   }
