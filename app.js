@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 var USER_COLLECTION = "users";
+var SOURCE_COLLECTION = "sources";
 
 app.get('/', function(req, res){
    res.send("Hello world!");
@@ -28,11 +29,11 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
     process.exit(1);
   }
 
- // Save database object from the callback for reuse.
- db = client.db();
- console.log("Database connection ready");
-
+  // Save database object from the callback for reuse.
+  db = client.db();
+  console.log("Database connection ready");
 });
+
 app.post("/api/register", function(req, res) {
   var newUser = req.body;
   //newUser.createDate = new Date();
@@ -43,9 +44,30 @@ app.post("/api/register", function(req, res) {
   } else {
     db.collection(USER_COLLECTION).insertOne(newUser, function(err, doc) {
       if (err) {
-       console.log("Failed to create new contact.");
+       console.log("Failed to create new user.");
       } else {
       	console.log(doc.ops[0]);
+        res.status(201).json(doc.ops[0]);
+      }
+    });
+  }
+});
+
+app.post("/api/source-add", function(req, res) {
+  console.log('/api/source-add');
+  console.log(req.body);
+  var source = req.body;
+  source.dateLastModified = new Date();
+  console.log(source);
+
+  if (!req.body) {
+    handleError(res, "Invalid user input", "Must provide a name and a url.", 400);
+  } else {
+    db.collection(SOURCE_COLLECTION).insertOne(source, function(err, doc) {
+      if (err) {
+       console.log("Failed to create new source.");
+      } else {
+        console.log(doc.ops[0]);
         res.status(201).json(doc.ops[0]);
       }
     });

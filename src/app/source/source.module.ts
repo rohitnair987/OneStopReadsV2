@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { RouterModule } from '@angular/router';
+import { SourceAddComponent } from './source-add/source-add.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule
   ],
-  declarations: [ListComponent, DetailsComponent],
+  declarations: [ListComponent, DetailsComponent, SourceAddComponent],
   exports: [ListComponent]
 })
 
