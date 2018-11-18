@@ -1,4 +1,5 @@
 export class Source {
+    _id: string;
     name: string;
     description: string;
     url: string;

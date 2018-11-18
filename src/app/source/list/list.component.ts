@@ -26,8 +26,7 @@ export class ListComponent implements OnInit {
   sources: Source[];
   errorMsg: string;
   
-  constructor(private sourceService: SourceService) { 
-  }
+  constructor(private sourceService: SourceService) { }
 
   ngOnInit() {
     this.sourceService.getSources()
@@ -50,6 +49,18 @@ export class ListComponent implements OnInit {
     return this.sources.filter((src: Source) =>
       src.name.toLocaleLowerCase().indexOf(filterText) !== -1
     );
+  }
+
+  removeSource(sourceMongoId: string) {
+    this.sourceService.deleteSource(sourceMongoId)
+      .subscribe(
+        res => {
+          console.log(res);
+          this.filteredSources = this.filteredSources.filter(src => src._id != sourceMongoId);
+          this.sources = this.sources.filter(src => src._id != sourceMongoId);
+        },
+        error => this.errorMsg = <any>error
+      );
   }
 
 }
