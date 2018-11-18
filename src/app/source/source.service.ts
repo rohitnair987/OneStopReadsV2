@@ -9,8 +9,7 @@ import { tap, catchError, map } from 'rxjs/operators';
 })
 export class SourceService {
 
-  private sourceUrl = 'api/source/sampleSources.json';
-  private sourceApiUrl = 'http://localhost:3000/api';
+  private sourceApiUrl = 'http://localhost:3000/api/source';
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +20,7 @@ export class SourceService {
 
   getSources(): Observable<Source[]> {
     return this.http
-      .get<Source[]>(`${this.sourceApiUrl}/sources-get`)
+      .get<Source[]>(`${this.sourceApiUrl}/get`)
       .pipe(
         // use tap while debugging
         // tap(rawData => console.log("getSources Full data: " + JSON.stringify(rawData))),
@@ -30,11 +29,19 @@ export class SourceService {
   }
 
   addSource(source: Source) : Observable<any> {
-    return this.http.post<any>(`${this.sourceApiUrl}/source-add`, source)
+    return this.http.post<any>(`${this.sourceApiUrl}/add`, source)
       .pipe(
         // tap(rawData => console.log("addSource Full data: " + JSON.stringify(rawData))),
         catchError(this.handleError)
       );
+  }
+
+  deleteSource(id: string): Observable<any> {
+    return this.http.delete(`${this.sourceApiUrl}/delete/${id}`)
+      .pipe(
+        // tap(rawData => console.log("deleteSource Full data: " + JSON.stringify(rawData))),
+        map(this.extractData),
+        catchError(this.handleError));
   }
 
   getNews(url: string): Observable<any> {
