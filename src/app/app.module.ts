@@ -11,9 +11,14 @@ import { ListComponent } from './source/list/list.component';
 import { DetailsComponent } from './source/details/details.component';
 import { DetailsGuard } from './source/details/details.guard';
 import { NewsComponent } from './news/news.component';
+import { RegisterComponent } from "src/app/login-and-register/register/register.component";
+import { LoginComponent } from "src/app/login-and-register/login/login.component";
 
 var routes = [
   { path: 'news', component: NewsComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  //{ path: 'logout', component: LogoutComponent },
   { path: 'sources', component: ListComponent },
   { path: 'sources/:id',
     canActivate: [DetailsGuard],
@@ -31,7 +36,7 @@ var routes = [
     BrowserModule,
     SourceModule,
     LoginModule,
-    LoginAndRegisterModule
+    LoginAndRegisterModule,
     HttpClientModule,
     RouterModule.forRoot(
       routes,

@@ -1,15 +1,16 @@
-
-<!--The content below is only a placeholder and can be replaced.-->
-<div  ng-app = "myApp" style="text-align:center">
+<div  ng-app = "OneStopReads" style="text-align:center">
   <h1>Welcome to {{ title }}!</h1>
 </div>
-
-<app-register></app-register>
 
 <nav class='navbar navbar-expand navbar-light bg-light'>
   <ul class='nav nav-pills'>
     <li><a class='nav-link' [routerLink]="['/']">{{title}}</a></li>
     <li><a class='nav-link' [routerLink]="['/sources']">List Sources</a></li>
+
+    <li *ngIf='isLoggedIn == false'><a class='nav-link' [routerLink]="['/register']">Register</a></li>
+    <li *ngIf='isLoggedIn == false'><a class='nav-link' [routerLink]="['/login']">Login</a></li>
+
+    <li *ngIf='isLoggedIn'><a class='nav-link' [routerLink]="['/logout']">Logout</a></li>
   </ul>
 </nav>
 
