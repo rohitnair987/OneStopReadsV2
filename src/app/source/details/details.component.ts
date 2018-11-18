@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ISource } from 'src/models/source';
+import { Source } from 'src/models/source';
 import { SourceService } from '../source.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { SourceService } from '../source.service';
 export class DetailsComponent implements OnInit {
 
   pageTitle: string = 'Source Details';
-  source: ISource;
+  source: Source;
   errorMsg: string;
 
   constructor(private route: ActivatedRoute,

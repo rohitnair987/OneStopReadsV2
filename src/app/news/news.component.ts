@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ISource } from "src/models/source";
+import { Source } from "src/models/source";
 import { SourceService } from "src/app/source/source.service";
 
 @Component({
@@ -10,26 +10,36 @@ import { SourceService } from "src/app/source/source.service";
 export class NewsComponent implements OnInit {
 
   pageTitle: string = 'News';
-  sources: ISource[];
-  displayedSources: ISource[];
+  sources: Source[];
+  displayedSources: Source[];
   errorMsg: string;
   imgWidth: number = 50;
   imgHeight: number = 50;
   unsubscribeList = [];
 
   constructor(private sourceService: SourceService) { }
-
+  
   ngOnInit() {
-    
     this.sourceService.getSources()
-    .subscribe(
-      sources => {
-        this.sources = sources;
-        this.displayedSources = this.sources;
-      },
-      error => this.errorMsg = <any>error // <-- failure
-    );
+      .subscribe(
+        sources => {
+          sources.forEach(source => {
+            this.sourceService.getNews(source.url)
+              .subscribe(res => {
+                if (res.status === "ok") {
+                  source.news = res.articles.map(article => article.title);
+                }
+                else {
+                  source.news = [];
+                }
+              })
+          });
 
+          this.sources = sources;
+          this.displayedSources = this.sources;
+        },
+        error => this.errorMsg = <any>error // <-- failure
+      );
   }
 
   unsubscribe(sourceName) {
