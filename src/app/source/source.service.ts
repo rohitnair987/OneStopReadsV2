@@ -19,8 +19,7 @@ export class SourceService {
   }
 
   getSources(): Observable<Source[]> {
-    return this.http
-      .get<Source[]>(`${this.sourceApiUrl}/get`)
+    return this.http.get<Source[]>(`${this.sourceApiUrl}/get`)
       .pipe(
         // use tap while debugging
         // tap(rawData => console.log("getSources Full data: " + JSON.stringify(rawData))),
@@ -28,8 +27,22 @@ export class SourceService {
       );
   }
 
-  addSource(source: Source) : Observable<any> {
-    return this.http.post<any>(`${this.sourceApiUrl}/add`, source)
+  getSource(id: string): Observable<Source> {
+    return this.http.get<Source>(`${this.sourceApiUrl}/get/${id}`)
+      .pipe(
+        // tap(rawData => console.log("getSource Full data: " + JSON.stringify(rawData))),
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+
+  upsertSource(source: Source) : Observable<any> {
+    var url = 'add';
+    if (source._id) {
+      url = 'update';
+    }
+
+    return this.http.post<any>(`${this.sourceApiUrl}/${url}`, source)
       .pipe(
         // tap(rawData => console.log("addSource Full data: " + JSON.stringify(rawData))),
         catchError(this.handleError)

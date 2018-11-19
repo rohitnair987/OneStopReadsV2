@@ -34,6 +34,11 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:2701
   console.log("Database connection ready");
 });
 
+function handleError(res, reason, message, code) {
+  console.log("ERROR: " + reason);
+  res.status(code || 500).json({"error": message});
+}
+
 app.post("/api/register", function(req, res) {
   var newUser = req.body;
   //newUser.createDate = new Date();
@@ -54,8 +59,27 @@ app.post("/api/register", function(req, res) {
 });
 
 // Source endpoints.
-
 sourceApiPrefix = '/api/source';
+
+app.get(`${sourceApiPrefix}/get`, function(req, res) {
+  db.collection(SOURCE_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get sources.");
+    } else {
+      res.status(201).json(docs);
+    }
+  });
+});
+
+app.get(`${sourceApiPrefix}/get/:id`, function(req, res) {
+  db.collection(SOURCE_COLLECTION).findOne({_id: new ObjectID(req.params.id)}, function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get source.");
+    } else {
+      res.status(201).json(docs);
+    }
+  });
+});
 
 app.post(`${sourceApiPrefix}/add`, function(req, res) {
   var source = req.body;
@@ -68,28 +92,40 @@ app.post(`${sourceApiPrefix}/add`, function(req, res) {
       if (err) {
        console.log("Failed to create new source.");
       } else {
-        console.log(doc.ops[0]);
         res.status(201).json(doc.ops[0]);
       }
     });
   }
 });
 
-app.get(`${sourceApiPrefix}/get`, function(req, res) {
-  db.collection(SOURCE_COLLECTION).find({}).toArray(function(err, docs) {
-    if (err) {
-      console.log("Failed to get sources.");
-      handleError(res, err.message, "Failed to get sources.");
-    } else {
-      res.status(201).json(docs);
-    }
-  });
+app.post(`${sourceApiPrefix}/update`, function(req, res) {
+  var source = req.body;
+  id = source._id;
+  delete source._id;
+  source.dateLastModified = new Date();
+
+  if (!req.body) {
+    handleError(res, "Invalid user input", "Must provide a name and a url.", 400);
+  } else {
+    db.collection(SOURCE_COLLECTION).updateOne(
+      { _id: new ObjectID(id) },
+      { $set: source },
+      { upsert: true, new: true },
+      function(err, doc) {
+        if (err) {
+          handleError(res, err.message, "Failed to add or update source.");
+        } else {
+          source._id = id;
+          res.status(201).json(source);
+        }
+      }
+    );
+  }
 });
 
 app.delete(`${sourceApiPrefix}/delete/:id`, function(req, res) {
   db.collection(SOURCE_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
-      console.log("Failed to delete source.");
       handleError(res, err.message, "Failed to delete source.");
     } else {
       res.status(200).json(req.params.id);

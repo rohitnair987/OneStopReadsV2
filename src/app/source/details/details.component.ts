@@ -19,23 +19,16 @@ export class DetailsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-
-    // The '+' converts string to number
-    //let id = +this.route.snapshot.paramMap.get('id');
     let id = this.route.snapshot.paramMap.get('id');
 
-    this.pageTitle += `: ${id}`;
-
-    // Create a getSource(id) on the api side once mongodb's set up
-    this.sourceService.getSources()
+    this.sourceService.getSource(id)
       .subscribe(
-        sources => this.source = sources[0],
-        error => this.errorMsg = <any>error // <-- failure
+        source => this.source = source,
+        error => this.errorMsg = <any>error
       );
   }
 
   onBack(): void {
-    // Navigate to source list.
     this.router.navigate(['/sources']);
   }
 
