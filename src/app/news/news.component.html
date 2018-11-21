@@ -3,6 +3,11 @@
 <br />
 <br />
 
+<input type="checkbox" (change)='hideImages = !hideImages'>
+<label>Hide Images</label>
+<input type="checkbox" (change)='hideDescription = !hideDescription'>
+<label>Show only headlines</label>
+
 <div *ngIf='displayedSources && displayedSources.length'>
   <div *ngFor='let source of displayedSources'>
     <div *ngIf='source.news && source.news.length' class='table-responsive'>
@@ -15,15 +20,16 @@
               <th>
                 {{ source.name }} 
                 <a (click)='unsubscribe(source.name)'>Unsubscribe</a>
-                
               </th>
             </tr>
           </thead>
       
           <tbody>
-            <tr *ngFor='let newsRow of source.news; let i = index'>
-              <td>{{ i + 1 }}</td>
-              <td>{{ newsRow }}</td>
+            <tr *ngFor='let newsArticle of source.news; let i = index'>
+              <td *ngIf='!hideImages'><img *ngIf='newsArticle.imgUrl' src='{{ newsArticle.imgUrl }}' class='articleImg'></td>
+              <td *ngIf='newsArticle.url'><a href='{{ newsArticle.url }}'>{{ newsArticle.title }}</a></td>
+              <td *ngIf='!newsArticle.url'>{{ newsArticle.title }}</td>
+              <td *ngIf='! hideDescription'>{{ newsArticle.description }}</td>
             </tr>
           </tbody>
         </table>

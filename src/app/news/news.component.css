@@ -10,3 +10,8 @@ a:hover {
 .floatRight {
     float: right;
 }
+
+.articleImg {
+    width: 4rem;
+    height: 4rem;
+}

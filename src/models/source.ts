@@ -1,3 +1,5 @@
+import { News } from "src/models/news";
+
 export class Source {
     _id: string;
     name: string;
@@ -8,5 +10,5 @@ export class Source {
     lastModifiedBy: string;
     imgUrl: string
 
-    news: string[]
+    news: News[]
 }
