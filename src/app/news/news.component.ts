@@ -26,8 +26,14 @@ export class NewsComponent implements OnInit {
           sources.forEach(source => {
             this.sourceService.getNews(source.url)
               .subscribe(res => {
-                if (res.status === "ok") {
-                  source.news = res.articles.map(article => article.title);
+                if (res.status.toLowerCase() === "ok") {
+                  if (res.articles) {
+                    // bbc
+                    source.news = res.articles.map(article => article.title);
+                  } else if (res.results) {
+                    // nyt
+                    source.news = res.results.map(article => article.title);
+                  }
                 }
                 else {
                   source.news = [];

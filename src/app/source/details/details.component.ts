@@ -8,6 +8,7 @@ import { SourceService } from '../source.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
+
 export class DetailsComponent implements OnInit {
 
   pageTitle: string = 'Source Details';
