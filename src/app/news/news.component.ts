@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Source } from "src/models/source";
 import { SourceService } from "src/app/source/source.service";
+import { News } from "src/models/news";
 
 @Component({
   selector: 'app-news',
@@ -8,10 +9,11 @@ import { SourceService } from "src/app/source/source.service";
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-
   pageTitle: string = 'News';
   sources: Source[];
   displayedSources: Source[];
+  hideImages = false;
+  hideDescription = false;
   errorMsg: string;
   imgWidth: number = 50;
   imgHeight: number = 50;
@@ -27,13 +29,25 @@ export class NewsComponent implements OnInit {
             this.sourceService.getNews(source.url)
               .subscribe(res => {
                 if (res.status.toLowerCase() === "ok") {
-                  if (res.articles) {
-                    // bbc
-                    source.news = res.articles.map(article => article.title);
-                  } else if (res.results) {
-                    // nyt
-                    source.news = res.results.map(article => article.title);
+                  source.news = new Array<News>();
+                  var news = [];
+                  if (res.articles) { //bbc
+                    news = res.articles;
+                  } else if (res.results) { //nyt
+                    news = res.results;
                   }
+
+                  news.forEach(n => {
+                    if (n.title) {
+                      var newsArticle = new News();
+                      newsArticle.title = n.title;
+                      newsArticle.description = n.description || n.abstract;
+                      newsArticle.url = n.url;
+                      newsArticle.imgUrl = n.urlToImage;
+  
+                      source.news.push(newsArticle);
+                    }
+                  });
                 }
                 else {
                   source.news = [];
