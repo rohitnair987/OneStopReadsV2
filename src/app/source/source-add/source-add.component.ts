@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { Source } from "src/models/source";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { SourceService } from "src/app/source/source.service";
@@ -11,36 +11,43 @@ import { SourceService } from "src/app/source/source.service";
 })
 
 export class SourceAddComponent implements OnInit {
-
   pageTitle = 'Add Source';
   showErrorMsg = false;
   source: Source;
-  mongoRecordId: string;
   formdata: FormGroup;
   
   constructor(private router: Router,
-      private sourceService: SourceService) { }
+      private sourceService: SourceService,
+      private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.newSource();
-  }
+    let id = this.route.snapshot.paramMap.get('id');
 
-  newSource() {
-    this.source = new Source();
+    if (id == null) {
+      this.pageTitle = 'Add Source';
+      this.source = new Source();
+    } else {
+      this.pageTitle = 'Edit Source';
+      this.sourceService.getSource(id)
+        .subscribe(
+          source => {
+            this.source = source;
+          },
+          error => this.showErrorMsg = true
+        );
+    }
   }
 
   onSubmit() { 
     this.showErrorMsg = false;
 
-    //this.source.lastModifiedBy = ;
-
-    this.sourceService.addSource(this.source)
+    this.sourceService.upsertSource(this.source)
       .subscribe(
-        response => {
-          this.mongoRecordId = response._id;
+        source => {
+          this.source = source;
+          this.router.navigate(['/sources', source._id]);
         },
         error => {
-          this.mongoRecordId = "";
           this.showErrorMsg = true;
         }
       );

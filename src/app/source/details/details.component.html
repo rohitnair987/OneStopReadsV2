@@ -5,23 +5,36 @@
 </div>
 
 <br />
+<span *ngIf='errorMsg'>{{ errorMsg }}</span>
+<br />
 
-<div class='table-responsive'>
-  <table class='table' *ngIf='source'>
-    <tr>
-      <th>Name</th>
-      <td>{{ source.name }}</td>
-    </tr>
-    <tr>
-      <th>Url</th>
-      <td>{{ source.url }}</td>
-    </tr>
-  </table>
-</div>
+<div *ngIf='source'>
+  <div class="row">
+    <div class="col-xs-3 bold">Name</div>
+    <div class="col-xs-9">{{ source.name }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 bold">Description</div>
+    <div class="col-xs-9">{{ source.description }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 bold">Url</div>
+    <div class="col-xs-9">{{ source.url }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 bold">Tags</div>
+    <div class="col-xs-9">{{ source.tags }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 bold">Image</div>
+    <div class="col-xs-9"><img src='{{ source.imgUrl }}'></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 bold">Last Modified</div>
+    <div class="col-xs-9">{{ source.dateLastModified }}</div>
+  </div>
 
-<div>
-  <button class='btn btn-primary'
-    (click)='onBack()'>
-    <i class='fa fa-chevron-left'></i> Back
+  <button class='btn btn-primary' [routerLink]="['/sources/edit', source._id]">
+    Edit
   </button>
 </div>

@@ -22,7 +22,7 @@ var routes = [
   //{ path: 'logout', component: LogoutComponent },
   { path: 'sources', component: ListComponent },
   { path: 'sources/add', component: SourceAddComponent },
-  { path: 'sources/edit/:id', component: ListComponent },
+  { path: 'sources/edit/:id', component: SourceAddComponent },
   { path: 'sources/:id',
     canActivate: [DetailsGuard],
     component: DetailsComponent },
@@ -43,7 +43,7 @@ var routes = [
     HttpClientModule,
     RouterModule.forRoot(
       routes,
-      { enableTracing: true } // for debugging
+      // { enableTracing: true } // for debugging
     )
   ],
   providers: [],
